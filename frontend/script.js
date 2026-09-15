@@ -1,24 +1,67 @@
-console.log("FASAL FLOW loaded successfully");
+// ==========================================
+// FASAL FLOW - COMMON SCRIPT
+// ==========================================
 
 
-// Smooth navigation
+// ==========================================
+// TEXT TO SPEECH
+// ==========================================
 
-document.querySelectorAll('a[href^="#"]').forEach(link => {
+function speakText(text) {
 
-    link.addEventListener("click", function(event) {
+    if (!("speechSynthesis" in window)) {
 
-        event.preventDefault();
+        console.log("Text-to-Speech is not supported.");
 
-        const target = document.querySelector(
-            this.getAttribute("href")
-        );
+        return;
+    }
 
-        if (target) {
-            target.scrollIntoView({
-                behavior: "smooth"
-            });
-        }
 
-    });
+    // Stop previous speech
+    window.speechSynthesis.cancel();
 
-});
+
+    const speech =
+        new SpeechSynthesisUtterance(text);
+
+
+    // Voice settings
+    speech.rate = 0.9;
+
+    speech.pitch = 1;
+
+    speech.volume = 1;
+
+
+    // Speak
+    window.speechSynthesis.speak(speech);
+
+}
+
+
+// ==========================================
+// STOP SPEECH
+// ==========================================
+
+function stopSpeaking() {
+
+    if ("speechSynthesis" in window) {
+
+        window.speechSynthesis.cancel();
+
+    }
+
+}
+
+
+// ==========================================
+// TEST VOICE
+// ==========================================
+
+function testVoice() {
+
+    speakText(
+        "Hello. FASAL FLOW voice assistance is working."
+    );
+
+}
